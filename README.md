@@ -1,92 +1,39 @@
-# 📨 Notificador Automático de Faturas Vencidas
+# Notificador Automático de Faturas
 
-Este projeto é uma automação em Python que lê uma base de dados de faturas, identifica quais estão vencidas com base na data atual e envia automaticamente um e-mail de cobrança personalizado para cada cliente inadimplente.
+Script de automação desenvolvido em Python para o rastreamento e cobrança proativa de faturas com prazo de validade expirado.
 
----
+## Objetivo
+O projeto foi construído para resolver um gargalo administrativo comum: o monitoramento e a notificação manual de inadimplência. A aplicação consome uma base de dados estruturada, aplica lógicas de verificação temporal e orquestra o envio em lote de e-mails de cobrança personalizados de forma totalmente automatizada.
 
-## 📄 Sobre o Projeto
+## Stack Tecnológico
+* Linguagem: Python 3
+* Processamento de Dados: Pandas
+* Manipulação Temporal: biblioteca nativa `datetime`
+* Integração de Rede: `smtplib` e `email.message` (Protocolo SMTP)
 
-O objetivo deste script é automatizar o processo de cobrança inicial, uma tarefa essencial mas repetitiva. Utilizando `pandas` para a manipulação de dados e a biblioteca `datetime`, o sistema faz uma verificação diária e age de forma proativa, garantindo que nenhuma fatura vencida seja esquecida.
+## Fluxo de Execução e Funcionalidades Principais
+O script opera de forma linear, priorizando a eficiência na leitura dos dados e a segurança no envio das mensagens:
+* Extração de Dados: Leitura estruturada de registros de clientes a partir de um arquivo `.csv` em memória.
+* Filtro Temporal: Cálculo do delta entre a data de execução do script e a data de vencimento (formato AAAA-MM-DD) mapeada na base.
+* Isolamento de Inadimplência: Separação eficiente das entidades que configuram atraso de pagamento.
+* Orquestração de E-mails: Construção de templates HTML dinâmicos e disparo individualizado via servidor SMTP, injetando valores nominais e monetários específicos de cada registro.
 
----
+## Estrutura de Dados Esperada
+O script requer um arquivo `faturas.csv` no diretório raiz contendo os seguintes cabeçalhos textuais:
+`cliente` | `email` | `valor` | `data_vencimento`
 
-## ✨ Funcionalidades
+## Como Executar Localmente
 
--   **Leitura de Dados**: Carrega uma lista de faturas a partir de um arquivo `.csv`.
--   **Lógica de Datas**: Utiliza a biblioteca `datetime` para obter a data atual e compará-la com as datas de vencimento.
--   **Filtragem de Dados**: Isola de forma eficiente apenas as faturas que estão com o pagamento atrasado.
--   **Envio de E-mails Personalizados**: Itera sobre a lista de faturas vencidas e envia um e-mail em HTML para cada cliente, mencionando seu nome, o valor da fatura e a data de vencimento para uma comunicação clara e direta.
+1. Clone o repositório:
+git clone https://github.com/SeuUser/nome-do-repo.git
 
----
+2. Provisione um ambiente virtual e instale as dependências:
+python -m venv venv
+source venv/bin/activate (Linux/macOS) ou venv\Scripts\activate (Windows)
+pip install pandas
 
-## 🗃️ Estrutura dos Dados
+3. Configure o ambiente de disparo:
+Edite o arquivo principal inserindo as credenciais de autenticação SMTP (e-mail remetente e Senha de App) nas variáveis designadas.
 
-O script espera encontrar um arquivo chamado `faturas.csv` no mesmo diretório, com a seguinte estrutura de colunas:
-
--   `cliente`: Nome do cliente ou da empresa.
--   `email`: Endereço de e-mail do cliente para o qual a notificação será enviada.
--   `valor`: O valor monetário da fatura.
--   `data_vencimento`: A data de vencimento da fatura no formato `AAAA-MM-DD`.
-
----
-
-## 💻 Tecnologias Utilizadas
-
--   **Python 3**
--   **Pandas**: Para leitura e manipulação eficiente dos dados da planilha.
--   **datetime**: Para lidar com a lógica de comparação de datas.
--   **smtplib & email.message**: Para a construção e envio dos e-mails.
-
----
-
-## 🚀 Como Executar
-
-Siga os passos abaixo para executar o projeto em sua máquina local.
-
-1.  **Pré-requisitos**
-    -   Certifique-se de ter o [Python 3](https://www.python.org/downloads/) instalado.
-
-2.  **Clone o Repositório**
-    ```bash
-    git clone [https://URL-DO-SEU-REPOSITORIO.git](https://URL-DO-SEU-REPOSITORIO.git)
-    cd nome-do-diretorio-do-projeto
-    ```
-
-3.  **Crie e Ative um Ambiente Virtual** (Recomendado)
-    ```bash
-    # Para Linux/macOS
-    python3 -m venv .venv
-    source .venv/bin/activate
-
-    # Para Windows
-    python -m venv .venv
-    .\.venv\Scripts\activate
-    ```
-
-4.  **Instale as Dependências**
-    ```bash
-    pip install pandas
-    ```
-
-5.  **Configure suas Credenciais de E-mail**
-    -   Abra o script Python.
-    -   Preencha as variáveis `MEU_EMAIL` e `MINHA_SENHA_APP` com seu e-mail do Gmail e uma [Senha de App](https://support.google.com/accounts/answer/185833) gerada.
-
-6.  **Prepare os Dados**
-    -   Certifique-se de que o arquivo `faturas.csv` está no mesmo diretório do script e preenchido com os dados a serem processados.
-
-7.  **Execute o Script**
-    ```bash
-    python nome_do_seu_script.py
-    ```
-
----
-
-## 📈 Exemplo de Saída
-
-Ao ser executado, o script irá imprimir no terminal uma mensagem de sucesso para cada e-mail de cobrança enviado:
-```
--> E-mail de cobrança para Empresa Alpha enviado com sucesso!
--> E-mail de cobrança para Consultoria Gama enviado com sucesso!
-```
-E os respectivos clientes receberão um e-mail personalizado em suas caixas de entrada.
+4. Execute a automação:
+python nome_do_script.py
