@@ -25,7 +25,7 @@ O script requer um arquivo `faturas.csv` no diretório raiz contendo os seguinte
 ## Como Executar Localmente
 
 1. Clone o repositório:
-git clone https://github.com/SeuUser/nome-do-repo.git
+git clone https://github.com/StJ0hn/NotificadorAutomaticoDeFaturasVencidas.git
 
 2. Provisione um ambiente virtual e instale as dependências:
 python -m venv venv
